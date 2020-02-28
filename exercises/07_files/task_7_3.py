@@ -15,5 +15,18 @@
  300    0a1b.5c80.7000   Gi0/7
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
-
 """
+with open('CAM_table.txt', 'r') as f:
+    for line in f:
+        line = line.split()
+        if line and line [0].isdigit():
+            vlan, mac, _, intf = line
+            print(vlan,mac,intf)
+            
+            
+        
+
+
+        
+        
+        

@@ -10,5 +10,9 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
-
+mac_cisco = []
 mac = ["aabb:cc80:7000", "aabb:dd80:7340", "aabb:ee80:7000", "aabb:ff80:7000"]
+for mac_adr in mac:
+    mac_cisco.append(mac_adr.replace(':','.'))
+print(mac_cisco)
+

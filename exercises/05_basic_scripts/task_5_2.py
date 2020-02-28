@@ -18,4 +18,30 @@ Mask:
 Проверить работу скрипта на разных комбинациях сеть/маска.
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
+
 """
+ip = input("Введите IP адрес (x.x.x.x/mask): ")
+octets = ip.split("/")
+ip_adr = octets[0].split('.')
+mask = int(octets[1])
+maskbin = '1'* mask + '0' * (32-mask)
+output = '''
+Network:
+{0:<8}  {1:<8}  {2:<8}  {3:<8}
+{0:08b}  {1:08b}  {2:08b}  {3:08b}
+'''
+out = '''
+Mask:
+/{0}
+{1:<8}  {2:<8}  {3:<8}  {4:<8}
+{1:08b}  {2:08b}  {3:08b}  {4:08b}
+'''
+print(output.format(int(ip_adr[0]), int(ip_adr[1]), int(ip_adr[2]), int(ip_adr[3])))
+print(out.format(mask, int(maskbin[0:8],2),int(maskbin[8:16],2), int(maskbin[16:24],2), int(maskbin[24:32],2)))
+
+
+
+
+
+
+
