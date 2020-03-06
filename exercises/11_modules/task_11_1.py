@@ -34,7 +34,7 @@ from pprint import pprint
 def parse_cdp_neighbors(command_output):
     dict1 = {}
     for line in command_output.split('\n'):
-        device = ','.join([s for s in line.split() if s.isdigit() and len(s) == 3])
+        device = ','.join([s for s in line.split() if s.isdigit()and len(s) == 3])
         if device in line.split():
             device = line.split()[0:1]
             intf_switch = (line.split()[1] + line.split()[2]).split()
@@ -45,9 +45,10 @@ def parse_cdp_neighbors(command_output):
         elif '>' in line:
             switch = [line.split()[0].replace('>show','')]
     return dict1
-with open('sh_cdp_n_sw1.txt', 'r') as f:
-    command_output = f.read()
-    pprint(parse_cdp_neighbors(command_output))
+if __name__ == "__main__":
+    with open('sh_cdp_n_sw1.txt', 'r') as f:
+        command_output = f.read()
+        pprint(parse_cdp_neighbors(command_output))
 
 
 

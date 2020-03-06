@@ -39,4 +39,84 @@ Cгенерировать топологию, которая соответст�
 > И модуль python для работы с graphviz:
 > pip install graphviz
 
+from task_11_1 import parse_cdp_neighbors
+from pprint import pprint
+from draw_network_graph import draw_topology
+from glob import glob
+
+def create_network_map(filenames):
+    result = {}
+    files = [ f for f in os.listdir('.') if os.path.isfile(f)]
+    for file in filenames:
+        with open(file, 'r') as f:
+            file = f.read()
+            parse_cdp_neighbors(file)
+            result.update(file)
+    return result
+    
+def create_network_map(filenames):
+    result = {}
+    for file in filenames:
+        with open(file, 'r') as f:
+            file = f.read()
+            connection = parse_cdp_neighbors(file)
+            result.update(connection)
+    return result
+if __name__ == "__main__":
+    filenames = [f for f in glob('*.txt')]
+    pprint(create_network_map(filenames))
+#    draw_topology(i)
 """
+from task_11_1 import parse_cdp_neighbors
+from pprint import pprint
+from draw_network_graph import draw_topology
+from glob import glob
+
+def create_network_map(filenames):
+    result = {}
+    data = {}
+    for file in filenames:
+        with open(file, 'r') as f:
+            file = f.read()
+            connection = parse_cdp_neighbors(file)
+            result.update(connection)
+    for key,value in result.items():
+        if data.get(value) == key:
+            continue
+        else:
+            data[key] = value
+    return data
+if __name__ == "__main__":
+    filenames = glob('*.txt')
+    total = (create_network_map(filenames))
+    draw_topology(total)
+
+
+
+
+
+'''
+result = {}
+filenames = glob('*.txt')
+for file in filenames:
+    with open(file, 'r') as f:
+        file = f.read()
+        connection = parse_cdp_neighbors(file)
+        result.update(connection)
+data = {}
+for key,value in result.items():
+    if data.get(value) == key:
+        continue
+    else:
+        data[key] = value
+pprint(data)'''
+
+
+    
+    
+
+
+
+            
+
+    
