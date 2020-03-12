@@ -4,10 +4,10 @@ from pprint import pprint
 
 def parse_cdp(filename):
     regex = (
-        "Device ID: (?P<device>\S+)"
-        "|IP address: (?P<ip>\S+)"
-        "|Platform: (?P<platform>\S+ \S+),"
-        "|Cisco IOS Software, (?P<ios>.+), RELEASE"
+        r"Device ID: (?P<device>\S+)"
+        r"|IP address: (?P<ip>\S+)"
+        r"|Platform: (?P<platform>\S+ \S+),"
+        r"|Cisco IOS Software, (?P<ios>.+), RELEASE"
     )
 
     result = {}
@@ -16,11 +16,14 @@ def parse_cdp(filename):
         for line in f:
             match = re.search(regex, line)
             if match:
-                if match.lastgroup == "device":
-                    device = match.group(match.lastgroup)
+                last = match.lastgroup
+                value = match.group(last)
+                #print(f"Lastgroup = {last:10}, {value}")
+                if last == "device":
+                    device = value
                     result[device] = {}
-                elif device:
-                    result[device][match.lastgroup] = match.group(match.lastgroup)
+                else:
+                    result[device][last] = value
 
     return result
 

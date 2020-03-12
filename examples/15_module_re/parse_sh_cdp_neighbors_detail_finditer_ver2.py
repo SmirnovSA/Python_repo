@@ -4,10 +4,12 @@ from pprint import pprint
 
 def parse_cdp(filename):
     regex = (
-        "Device ID: (?P<device>\S+)\n.*?"
-        " +IP address: (?P<ip>\S+).+?"
-        "Platform: (?P<platform>\S+ \S+),.+?"
-        "Version (?P<ios>\S+),"
+        r"Device ID: (?P<device>\S+)"
+        r".*?"
+        r"IP address: (?P<ip>\S+)\n"
+        r"Platform: (?P<platform>.+?),"
+        r".*?"
+        r"Cisco IOS Software, (?P<ios>.+?),"
     )
 
     result = {}
