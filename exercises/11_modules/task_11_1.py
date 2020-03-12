@@ -34,7 +34,7 @@ from pprint import pprint
 def parse_cdp_neighbors(command_output):
     dict1 = {}
     for line in command_output.split('\n'):
-        device = ','.join([s for s in line.split() if s.isdigit()and len(s) == 3])
+        device = ','.join([s for s in line.split() if s.isdigit() and len(s) == 3])
         if device in line.split():
             device = line.split()[0:1]
             intf_switch = (line.split()[1] + line.split()[2]).split()
