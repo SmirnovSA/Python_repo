@@ -39,39 +39,12 @@ Cгенерировать топологию, которая соответст�
 > И модуль python для работы с graphviz:
 > pip install graphviz
 
-from task_11_1 import parse_cdp_neighbors
-from pprint import pprint
-from draw_network_graph import draw_topology
-from glob import glob
-
-def create_network_map(filenames):
-    result = {}
-    files = [ f for f in os.listdir('.') if os.path.isfile(f)]
-    for file in filenames:
-        with open(file, 'r') as f:
-            file = f.read()
-            parse_cdp_neighbors(file)
-            result.update(file)
-    return result
-    
-def create_network_map(filenames):
-    result = {}
-    for file in filenames:
-        with open(file, 'r') as f:
-            file = f.read()
-            connection = parse_cdp_neighbors(file)
-            result.update(connection)
-    return result
-if __name__ == "__main__":
-    filenames = [f for f in glob('*.txt')]
-    pprint(create_network_map(filenames))
-#    draw_topology(i)
 """
 from task_11_1 import parse_cdp_neighbors
 from pprint import pprint
 from draw_network_graph import draw_topology
 from glob import glob
-
+'''
 def create_network_map(filenames):
     result = {}
     data = {}
@@ -90,28 +63,34 @@ if __name__ == "__main__":
     filenames = glob('*.txt')
     total = (create_network_map(filenames))
     draw_topology(total)
-
-
-
-
-
 '''
-result = {}
-filenames = glob('*.txt')
-for file in filenames:
-    with open(file, 'r') as f:
-        file = f.read()
-        connection = parse_cdp_neighbors(file)
-        result.update(connection)
-data = {}
-for key,value in result.items():
-    if data.get(value) == key:
-        continue
-    else:
-        data[key] = value
-pprint(data)'''
+'''
+def create_network_map(filenames):
+    network_map = {}
 
+    for filename in filenames:
+        with open(filename) as show_command:
+            parsed = parse_cdp_neighbors(show_command.read())
+            for key, value in parsed.items():
+                key, value = sorted([key, value])
+                network_map[key] = value
+    return network_map'''
+    
+def create_network_map(filenames):
+    dupl_map = {}
+    network_map = {}
 
+    for filename in filenames:
+        with open(filename) as show_command:
+            parsed = parse_cdp_neighbors(show_command.read())
+            dupl_map.update(parsed)
+    network_map = {min(key, value): max(key, value)
+                   for key, value in dupl_map.items()}
+    return network_map
+if __name__ == "__main__":
+    filenames = glob('*.txt')
+    total = (create_network_map(filenames))
+    draw_topology(total)
     
     
 

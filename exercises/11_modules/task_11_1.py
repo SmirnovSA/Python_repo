@@ -31,7 +31,7 @@ R6           Fa 0/2          143           R S I           2811       Fa 0/0
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
 from pprint import pprint
-def parse_cdp_neighbors(command_output):
+'''def parse_cdp_neighbors(command_output):
     dict1 = {}
     for line in command_output.split('\n'):
         device = ','.join([s for s in line.split() if s.isdigit() and len(s) == 3])
@@ -49,7 +49,23 @@ if __name__ == "__main__":
     with open('sh_cdp_n_sw1.txt', 'r') as f:
         command_output = f.read()
         pprint(parse_cdp_neighbors(command_output))
-
+'''
+def parse_cdp_neighbors(command_output):
+    result = {}
+    for line in command_output.split("\n"):
+        line = line.strip()
+        if ">" in line:
+            hostname = line.split(">")[0]
+        elif line and line[-1].isdigit():
+            # В other собираются все остальные элементы,
+            # которые явно не присваиваются
+            r_host, l_int, l_int_num, *other, r_int, r_int_num = line.split()
+            result[(hostname, l_int + l_int_num)] = (r_host, r_int + r_int_num)
+    return result
+if __name__ == "__main__":
+    with open('sh_cdp_n_sw1.txt', 'r') as f:
+        command_output = f.read()
+        pprint(parse_cdp_neighbors(command_output))
 
 
 
